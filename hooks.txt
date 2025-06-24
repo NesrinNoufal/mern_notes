@@ -1,0 +1,134 @@
+//Hooks
+
+-> Hooks are special functions that are  introduced in functional components for various purposes in a component.
+-> Like for state manipulation, accessing lifecycle events, context,DOM access, memoization,lazy loading  etc.
+-> Before state management and lifecycle methods were only accessible in class components.
+-> by react 16 above versins, hooks were introduced.
+-> we can also customize hooks as custom hooks for reusing logics across components.
+->avoids complex syntax like this,bind
+
+//useState
+-> For the manipulation of states.
+-> const [name,setName]=useState("");
+-> a variable and a setter function for the variable.
+//state
+->object carrying dynamic value which affects rendering.
+->is a special variable that affects rendering . normal variable doesnot affect the rendering.
+-> when there is an updation in the state, it triggers the virtual dom and compares with prev virtual dom and 
+   perform rerendering.
+-> State values preserves on rerendering, variables not.
+->states not preserved on page refresh.
+->on page referesh, whole app loads from initial state.
+->states returns to initail value.
+   contexts get cleared,
+   -> so if any state needs to be preserved on refresh, we can store using
+     *local storage- preserved on refresh
+     *session storage - clears on tab close
+     *api or db store.
+
+//useEffect
+->hook to perform side effects in a react component.
+-> receives 2 arguments , on is the function  another is a dependency array.
+->the block of code inside the useEffect get reexecuted on the change in the state in the dependency array.
+->Api calls, timers can be called inside useEffect.
+
+useEffect(()=>{
+   getUser(userId);
+},[userId])
+
+useEffect(()=>{
+   getUser()
+},[])
+
+useEffect(()=>{
+   const getUser=>async(userId){
+    try{
+    const data=await getUser(userId);
+    const userDetails=data.json.toString();
+    }
+    catch(err){
+        console.log("error",err);
+        alert(error);
+    }
+   }
+},[userId,userName]);
+
+useEffect(()=>{
+    setTimeout(()=>{
+        getUser()
+    },1000)
+},[]);
+
+
+
+
+//useRef
+->Used to access the DOM components or elements and manipulate it.
+
+const inputRef=useRef();
+//document.getElement("name").setElement.name("");
+changeName(){
+    inputRef. .text="";
+}
+return(
+    <>
+    <p ref={inputRef}></p>
+    <button onClick={changeName}></button>
+    </>
+)
+
+//useReducer
+->Used in imported state reduction.
+->used with contextAPI and redux.
+
+
+//useMemo
+->for memoizing expensive calculations
+->caches the result of calculations and prevents recalculation
+
+//useCallback()
+->For memoizing the functions
+->Avoids the function execution unnecessarly on component rerendering
+
+
+//custom Hooks
+->We can create or customize hook .
+->Create reusable logic inside a function which can be accesses by components.
+->can include api calls or specific logic only.
+->makes code cleaner and reusable
+
+
+//props drilling
+->it is the condition of nested passsing props down the child components from parent components.
+->It creates a confusion in logic and unnecessary dependency.
+->For avoiding this condition, contexts or other global state management systems can be used.
+
+//lifting states up
+->Props can only be passed from parent to child.so that if a parent needs some dynamic data access from
+  the child components, that is states from the child components can be passed to parent via callback functions.
+->This is case of lifting states up.
+
+
+
+//Context Api
+
+import AuthContext from "React.createContext()"
+
+const AuthContextProvider=()=>{
+    const authUser=localStorage.getItem("authUser");
+    return(
+    <AuthContext.provider value="authUser">
+       </child>
+    </AuthContext.provider>
+    )
+}
+export default AuthContextProvider.auth;
+
+
+ import useContext from "useContext"
+ export const updateUser()=>{
+    const authUser=useContext("authUser");
+    return(
+        <></>
+    )
+ }

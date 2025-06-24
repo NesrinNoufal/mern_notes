@@ -1,0 +1,170 @@
+//react basics
+
+//jsx
+
+-> it is a syntax extension for js ,
+-> allows to write html code inside js.
+-> improves readability and brings intuitivity into code
+-> it tells whatt ui should look like-intuitive.
+-> jsx is not browser readale, babel converts jsx into pure js as createElement.
+-> jsx should return a single element or a react fragment.
+
+
+const header=()=>{
+    return(
+        <>
+         <h1>Hello world!</h1>
+        </>
+    )
+}
+
+<button>{isLoggedIn? "SignUp" :"Login"}</button>
+
+
+//this and super keywords.
+
+//components
+-> compoents are the reusable blocks of codes which represent the part of the UI.
+
+//class components
+-> class components are ES6 classes
+->Uses lifecycle methods to track the component like componentWillMount,componentDidMount,componentWillUnmount
+->Used in older react versions
+->Uses render method
+->More biolerplate
+->this.state, setState()
+
+class Navbar extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={counter:0};
+    }
+    function increment(){
+        setState({counter:this.state.counter+1});
+    }
+    render(){
+        return(
+        <h1>Your rank is{this.state}</h1>
+        <button onClick=>{()=>increment()}>+</button>
+        );
+    }
+        
+    
+}
+
+//functional components
+->Modern,lightweight,simple component structure
+->Used in newer react versions
+->Simple pure js functions or arrow functions with return calles.
+-> Use Hooks 
+-> useEffect for lifecycle methods
+->More concise
+->states usig useState
+->Slightly higher performance 
+
+export const Navbar=()=>{
+    return(
+        <>
+        </>
+    )
+}
+export function Navbar(){
+   return(
+    <div>
+    </div>
+   )
+}
+
+
+
+
+//props and states
+
+//props
+-> Props are the arguments passed from parent to child components
+-> Props changes initiates component rerenders
+->Only down passing from parent to child
+->Immutable 
+
+//state
+-> Mutable variables stored inside the components
+-> Component specific
+-> Created and maintained inside the single component
+->Can pass states to other components as props.
+->can pass state initialized in one component to the parent components through callbacks
+
+//Event handling in react
+
+-> Event handling in react is same as in pure html code
+-> in html code <button onclick="changeColor()">,
+     in react  <button onClick={changeColor()}</button>
+->calling a function inside a html tag within {} -> jsx code, not as strings as in html code.
+->common event handling functions
+   * onClick()
+   * onSubmit()
+   * onMouseEnter()
+   * onChange()
+   * onFocus()
+   * onBlur()
+   *onKeyDown()
+-> React uses synthetic event handling which is almost similar to browser's native event handling
+-> React uses synthetic event handling for cross-browser support- DOM native events wrapped for cross-browser consistency,
+    auto memory cleanup, same interface as DOM events.
+-> onChange(e)=>{
+        console.log(e);   //synthetic event handling
+        console.log(e.target)   //DOM access
+   }
+
+   const chnageName(e)=>{
+     console.log(e);   //synthetic event handling
+        console.log(e.target) 
+   }
+   <p onChange(e)={chnageName}></p>  //react internally passes event e.
+
+   
+   const chnageName(name)=>{
+     console.log(name);   //synthetic event handling
+   }
+     <p onChange()={chnageName(name)}></p>
+
+
+
+//Conditional Rendering
+-> checks a condition and executes one operation if not, render another operation.
+-> Render code based on conditions
+-> many ways to conditional Rendering
+
+*using simple if else 
+ if(condition){
+    return <h1> hi </h1>
+ }
+ else{
+    return <h1> Bye </h1>
+ }
+
+*Using ternary operator
+-> As a seperate jsx line
+-> {isNameChange ? "view" : "changeName"}
+-> we can call a js operation or either html code.
+
+*using Logical AND operator(&&)
+->if a condition satisfies, then render something otherwise not render anything
+{ifSuccess && "Success"}
+
+*returing null for hiding component if a condition not satisfies
+ if(!success ){
+    return null;
+ }
+
+
+
+
+
+
+  
+
+
+
+
+
+

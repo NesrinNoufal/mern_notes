@@ -1,0 +1,66 @@
+//asynchronous programming
+
+//1. Callbacks
+//2. Promises
+//3. Async/Await
+
+
+//Promises
+const getData=new Promise((resolve,reject)=>{
+    if(success){
+        resolve(data)
+    }else{
+        reject(error)
+    }
+})
+.then(data=>console.log(data));
+.catch(err=>console.log(err));
+
+
+
+
+const promise = new Promise((resolve,rejecr)=>{
+    setTimeout((
+        resolve({user:"a",id:1})
+    ),1000
+    )
+    reject({error:"An error occured"})
+})
+.then(data=>console.log(data));
+.catch(err=>console.log(err));
+
+
+const promise = new Pro/mise((resolve,rejecr)=>{
+    const success=true;
+    const data="Hello world";
+    const err="error occured"
+    if(success){
+        resolve(data);
+    }else{
+        reject(err);
+    }
+})
+.then(data=>console.log(data));
+.catch(err=>console.log(err));
+    
+    
+
+
+ 
+
+
+
+
+//functions in js
+function getData(){
+
+}
+const getData=()>{
+
+}
+async function getData(){
+
+}
+const getData= async()=>{
+
+}

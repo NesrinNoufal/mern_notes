@@ -1,0 +1,135 @@
+//Event loop phases
+
+//1. Timers
+//2. I/O callbacks
+//3. idle, prepare
+//4. poll
+//5. check
+//6. close callbacks
+
+//Event loop
+
+const fs=require('fs');
+
+setTimeout(()=>{
+    console.log("Timer : setTimeout");
+},0);
+
+setImmediate(()=>{
+    console.log("check phase: setImmediate")
+});
+
+fs.readFile(__filename,()=>{
+    console.log("Poll phase: fs.readFile callback");
+
+    setTimeout(()=>{
+        console.log("Timers inside fs:setTimeout");
+    },0);
+
+    setImmediate(()=>{
+       console.log("Check inside fs: setImmediate");
+    });
+
+    process.nextTick(()=>{
+        console.log("Microtask queue:process.nextTick inside fs.readFile callback");
+    })
+})
+
+process.nextTick(()=>{
+    console.log("Microtask queue: process.nextTick ")
+})
+
+
+//execution output
+
+Microtask queue: process.nextTick
+Timer : setTimeout
+check phase: setImmediate
+Poll phase: fs.readFile callback
+Microtask queue:process.nextTick inside fs.readFile callback
+Timers inside fs:setTimeout
+Check inside fs: setImmediate
+
+
+//close callback
+
+const net = require('net');
+
+const server = net.createServer((=>{
+    socket.on('end',()=>{
+        console.log("client disconnected)
+    })
+}))
+
+server.listen(3000, ()=>{
+    console.log("Server listening on port 3000")
+});
+
+setTimeout(()=>{
+    server.close(()=>{
+        console.log("Server closed");
+    },1000)
+})
+
+//execution output
+Server listening on port 3000
+Server closed
+client disconnected
+
+
+//Summary of event loop
+
+1. Event loop is a mechanism that Node.js uses to handle non-blocking I/O operations.
+2. It is a loop that runs in the background and handles events and callbacks.
+3. It is a single-threaded, event-driven, and non-blocking I/O operation.
+
+process.nextTick(), Promises - microtask queue
+setTimeout(), setIntervel() - Timers
+setImmediate() - Pending callback
+I/O events(fs,net,DNS) - poll
+setImmediate - check
+close callbacks - close
+
+Between each phase microtask queue (process.nextTick(),Promises) are executed.
+
+
+const fs = require('fs');
+
+async function readFileAsync() {
+  const data = await new Promise((resolve) => {
+    fs.readFile(__filename, () => {
+      console.log('📄 Poll phase: fs.readFile');
+      resolve('done');
+    });
+  });
+
+  console.log('✅ Async/Await resolved:', data);
+}
+
+setTimeout(() => {
+  console.log('⏳ Timers phase: setTimeout');
+}, 0);
+
+setImmediate(() => {
+  console.log('🔁 Check phase: setImmediate');
+});
+
+Promise.resolve().then(() => {
+  console.log('🧵 Microtask queue: Promise then');
+});
+
+process.nextTick(() => {
+  console.log('🧵 Microtask queue: process.nextTick');
+});
+
+readFileAsync();
+
+//execution output
+
+Microtask queue: process.nextTick
+Microtask queue: Promise then
+⏳ Timers phase: setTimeout
+🔁 Check phase: setImmediate
+Poll phase: fs.readFile
+✅ Async/Await resolved:, done
+
