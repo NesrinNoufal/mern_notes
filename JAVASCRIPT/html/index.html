@@ -23,6 +23,37 @@ catch(err){
 console.log("error",err);
 }
 
+
+const result= 4+'5';
+console.log(result);
+console.log(typeof(result));
+console.log(Number(result));
+console.log(typeof(Number(result).toString));
+
+// function getUser(){
+
+// }
+// const listUser=function getUser(){
+
+// }
+// const getUser=()=>{
+
+// }
+//promise
+const promise = new Promise((res, rej) => {
+    setTimeout(() => {
+        const success = true;
+
+        if (success) {
+            res(success);
+        } else {
+            rej(success);
+        }
+    }, 20);
+})
+.then(data => console.log("Resolved:", data))
+.catch(err => console.log("Rejected:", err));
+
 </script>
 
 </body>

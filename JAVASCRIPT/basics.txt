@@ -1,3 +1,7 @@
 //Basics of Javascript
 
-//
+//type coehersion
+
+5+'2'='52 //js automatically considers it as a string
+Number('42') = string
+String(34)
