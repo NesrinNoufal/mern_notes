@@ -46,7 +46,21 @@ const promise = new Pro/mise((resolve,rejecr)=>{
     
 
 
- 
+ const promise=new Promise((resolve,reject)=>{
+    const success=true;
+    const err="Error occures"
+    if(sucess){
+        resolve(sucess);
+    }
+    else{
+        reject(err);
+    }
+ })
+ .then(data=>console.log(data));
+ .catch(err=>console.log(err));
+
+ o/p=>
+ true
 
 
 
